@@ -9,19 +9,21 @@
 (defn log [& args] (.log js/console (apply pr-str args)))
 (defn log-obj [obj] (.log js/console obj))
 
-(defn generate [mask]
+(defn generate [mask-name mask]
   (let [
         fields (reformat mask)
-        declaration (class-def fields)
+        declaration (class-def mask-name)
         attrs (attributes fields)
         ]
-    (str (boilerplate) "\n\n" declaration "\n" (class-import) "\n\n" (class-headers "product") "\n" attrs "\n}" "\n\n" )))
+    (str (boilerplate) "\n\n" declaration "\n" (class-import) "\n\n" (class-headers mask-name) "\n" attrs "\n}" "\n\n" )))
 
 (defn on-click []
   (let [
+        mask-name (let [name (dommy/value (sel1 :#mask-name))]
+                    (if (clojure.string/blank? name) "ClassName" name))
         json (dommy/value (sel1 :#input))
         mask (js->clj (JSON/parse json))
-        code (generate mask)
+        code (generate mask-name mask)
         ]
     (-> (sel1 :#output) (dommy/set-value! code))))
 
@@ -38,8 +40,8 @@
 
 (defn extract-section-content [acc [key val]] (conj acc (reformat-field val)))
 
-(defn class-def [mask]
-  "class Product(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {")
+(defn class-def [mask-name]
+  (str "class " (clojure.string/capitalize mask-name) "(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {"))
 
 (defn class-import []
   "import PcgImplicits._")
