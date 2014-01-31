@@ -27,7 +27,8 @@
   (dommy/listen! (sel1 :#generate) :click on-click)
   (on-click))
 
-(defn rename [name] (clojure.string/replace name #"\[(\d+)\]" "`$1`"))
+(defn rename [name] 
+  (str "`" (clojure.string/replace name #"\[(\d+)\]" "$1") "`"))
 
 (defn reformat-field [fields]
   (reduce (fn [acc [name obj]] (conj acc (merge obj {"name" (rename name)}))) [] fields))
