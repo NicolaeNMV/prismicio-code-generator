@@ -47,10 +47,10 @@
   "import PcgImplicits._")
 
 (defn class-headers [mask-name]
-  (str "val maskName = "\" mask-name "\"\n"
-       "def id: String = document.id" "\n"
-       "def slug: String = document.slug" "\n"
-       "def tags: Seq[String] = document.tags"))
+  (str "  val maskName = "\" mask-name "\"\n"
+       "  def id: String = document.id" "\n"
+       "  def slug: String = document.slug" "\n"
+       "  def tags: Seq[String] = document.tags"))
 
 (defn attributes [fields] (clojure.string/join "\n" (map attribute fields)))
 
@@ -67,13 +67,14 @@
   (let [
         type-fun (get (map-type-to-fun) "StructuredText")
       ]
-      (if (nil? type-fun) "nil" (str "    " (type-fun name content)))
+      (if (nil? type-fun) "nil" (str "  " (type-fun name content)))
   )
 )
 
 (defn map-type-to-fun []
   {"StructuredText" type-structured-text
    "Image" type-image
+   "Color" type-color
   }
 )
 
@@ -83,6 +84,12 @@
 (defn type-image [name content]
   (str "def " name ": Option[Fragment.Image] = document.getImage(s\"$maskName." name ")"))
 
+(defn type-color [name content]
+  (str "def " name ": Option[RichColor] = document.getColor(s\"$maskName." name ")"))
+
+
+Color => Option[RichColor]
+
 (defn boilerplate []
  "package models
 
@@ -90,37 +97,37 @@ import io.prismic._
 import controllers._
 
 case class RichStructuredText(st: Fragment.StructuredText) {
-def text: Option[String] = {
-Some(st.blocks.collect { case b: Fragment.StructuredText.Block.Text => b.text }.mkString(\"\\n\")).filterNot(_.isEmpty)
-}
-def html(linkResolver: DocumentLinkResolver): Option[String] = {
-Some(st.asHtml(linkResolver))
-}
+  def text: Option[String] = {
+    Some(st.blocks.collect { case b: Fragment.StructuredText.Block.Text => b.text }.mkString(\"\\n\")).filterNot(_.isEmpty)
+  }
+  def html(linkResolver: DocumentLinkResolver): Option[String] = {
+    Some(st.asHtml(linkResolver))
+  }
 }
 
 case class RichColor(color: Fragment.Color) {
-def text: Option[String] = {
-Some(color.hex)
-}
-def html: Option[String] = {
-Some(color.asHtml)
-}
+  def text: Option[String] = {
+    Some(color.hex)
+  }
+  def html: Option[String] = {
+    Some(color.asHtml)
+  }
 }
 
 object PcgImplicits {
-implicit def toRichStructuredText(st: Fragment.StructuredText): RichStructuredText = {
-new RichStructuredText(st)
-}
+  implicit def toRichStructuredText(st: Fragment.StructuredText): RichStructuredText = {
+    new RichStructuredText(st)
+  }
 
-implicit def toRichStructuredTextOpt(st: Option[Fragment.StructuredText]): Option[RichStructuredText] = {
-st.map(new RichStructuredText(_))
-}
+  implicit def toRichStructuredTextOpt(st: Option[Fragment.StructuredText]): Option[RichStructuredText] = {
+    st.map(new RichStructuredText(_))
+  }
 
-implicit def toRichColor(color: Fragment.Color): RichColor = {
-new RichColor(color)
-}
+  implicit def toRichColor(color: Fragment.Color): RichColor = {
+    new RichColor(color)
+  }
 
-implicit def toRichColorOpt(color: Option[Fragment.Color]): Option[RichColor] = {
-color.map(new RichColor(_))
-}
+  implicit def toRichColorOpt(color: Option[Fragment.Color]): Option[RichColor] = {
+    color.map(new RichColor(_))
+  }
 }")
