@@ -20,210 +20,210 @@
     <div class="container-fluid">
       <h1>prismic.io code generator</h1>
       <div class="actions">
-        <input type="text" id="mask-name" placeholder="Mask name" />
+        <input type="text" id="mask-name" class="mask-name form-control" placeholder="Mask name" />
+        <select class="language-chooser form-control">
+          <option>Scala</option>
+          <option>Java</option>
+          <option>Ruby</option>
+        </select>
         <button id="generate" class="btn-primary btn-lg">Generate!</button>
       </div>
-      <select class="language-chooser form-control">
-        <option>Scala</option>
-        <option>Java</option>
-        <option>Ruby</option>
-      </select>
       <div class="row">
         <textarea id="input" class="col-md-6">
-{
-  "Main information" : {
-    "name" : {
-      "type" : "StructuredText",
-      "fieldset" : "Product name",
-      "config" : {
-        "single" : "heading1,em,strong",
-        "placeholder" : "The product's name"
-      }
-    },
-    "short_lede" : {
-      "type" : "StructuredText",
-      "fieldset" : "Short catcher",
-      "config" : {
-        "single" : "heading2,em,strong",
-        "placeholder" : "Shortest catcher to the product (about 15 words)"
-      }
-    },
-    "description" : {
-      "type" : "StructuredText",
-      "fieldset" : "Description",
-      "config" : {
-        "multi" : "paragraph,em,strong,hyperlink",
-        "placeholder" : "Exhaustive coverage of the product",
-        "minHeight" : "100px"
-      }
-    },
-    "image" : {
-      "type" : "Image",
-      "config" : {
-        "constraint" : {
+          {
+          "Main information" : {
+          "name" : {
+          "type" : "StructuredText",
+          "fieldset" : "Product name",
+          "config" : {
+          "single" : "heading1,em,strong",
+          "placeholder" : "The product's name"
+          }
+          },
+          "short_lede" : {
+          "type" : "StructuredText",
+          "fieldset" : "Short catcher",
+          "config" : {
+          "single" : "heading2,em,strong",
+          "placeholder" : "Shortest catcher to the product (about 15 words)"
+          }
+          },
+          "description" : {
+          "type" : "StructuredText",
+          "fieldset" : "Description",
+          "config" : {
+          "multi" : "paragraph,em,strong,hyperlink",
+          "placeholder" : "Exhaustive coverage of the product",
+          "minHeight" : "100px"
+          }
+          },
+          "image" : {
+          "type" : "Image",
+          "config" : {
+          "constraint" : {
           "width" : 500,
           "height" : 500
-        },
-        "thumbnails" : [ {
+          },
+          "thumbnails" : [ {
           "name" : "Icon",
           "width" : 250,
           "height" : 250
-        } ]
-      }
-    }
-  },
-  "Additional informations" : {
-    "related[0]" : {
-      "fieldset" : "Related products",
-      "type" : "Link",
-      "config" : {
-        "placeholder" : "Related product #1",
-        "select" : "document",
-        "masks" : [ "product" ]
-      }
-    },
-    "related[1]" : {
-      "type" : "Link",
-      "config" : {
-        "placeholder" : "Related product #2",
-        "select" : "document",
-        "masks" : [ "product" ]
-      }
-    },
-    "related[2]" : {
-      "type" : "Link",
-      "config" : {
-        "placeholder" : "Related product #3",
-        "select" : "document",
-        "masks" : [ "product" ]
-      }
-    },
-    "allergens" : {
-      "type" : "Text",
-      "fieldset" : "Product properties",
-      "config" : {
-        "label" : "Allergens"
-      }
-    },
-    "price" : {
-      "type" : "Number",
-      "config" : {
-        "label" : "Price (in $)",
-        "min" : 0
-      }
-    },
-    "flavour[0]" : {
-      "type" : "Select",
-      "config" : {
-        "label" : "Flavour",
-        "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel" ]
-      }
-    },
-    "flavour[1]" : {
-      "type" : "Select",
-      "config" : {
-        "label" : "Secondary flavour",
-        "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel", "Spice" ]
-      }
-    },
-    "color" : {
-      "type" : "Color",
-      "config" : {
-        "label" : "Color tag"
-      }
-    }
-  },
-  "Gallery" : {
-    "gallery[0]" : {
-      "fieldset" : "Image gallery",
-      "type" : "Image",
-      "config" : {
-        "constraint" : {
+          } ]
+          }
+          }
+          },
+          "Additional informations" : {
+          "related[0]" : {
+          "fieldset" : "Related products",
+          "type" : "Link",
+          "config" : {
+          "placeholder" : "Related product #1",
+          "select" : "document",
+          "masks" : [ "product" ]
+          }
+          },
+          "related[1]" : {
+          "type" : "Link",
+          "config" : {
+          "placeholder" : "Related product #2",
+          "select" : "document",
+          "masks" : [ "product" ]
+          }
+          },
+          "related[2]" : {
+          "type" : "Link",
+          "config" : {
+          "placeholder" : "Related product #3",
+          "select" : "document",
+          "masks" : [ "product" ]
+          }
+          },
+          "allergens" : {
+          "type" : "Text",
+          "fieldset" : "Product properties",
+          "config" : {
+          "label" : "Allergens"
+          }
+          },
+          "price" : {
+          "type" : "Number",
+          "config" : {
+          "label" : "Price (in $)",
+          "min" : 0
+          }
+          },
+          "flavour[0]" : {
+          "type" : "Select",
+          "config" : {
+          "label" : "Flavour",
+          "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel" ]
+          }
+          },
+          "flavour[1]" : {
+          "type" : "Select",
+          "config" : {
+          "label" : "Secondary flavour",
+          "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel", "Spice" ]
+          }
+          },
+          "color" : {
+          "type" : "Color",
+          "config" : {
+          "label" : "Color tag"
+          }
+          }
+          },
+          "Gallery" : {
+          "gallery[0]" : {
+          "fieldset" : "Image gallery",
+          "type" : "Image",
+          "config" : {
+          "constraint" : {
           "width" : 1500,
           "height" : 500
-        },
-        "thumbnails" : [ {
+          },
+          "thumbnails" : [ {
           "name" : "Squared",
           "width" : 500,
           "height" : 500
-        }, {
+          }, {
           "name" : "Small",
           "width" : 150,
           "height" : 50
-        } ]
-      }
-    },
-    "gallery[1]" : {
-      "type" : "Image",
-      "config" : {
-        "constraint" : {
+          } ]
+          }
+          },
+          "gallery[1]" : {
+          "type" : "Image",
+          "config" : {
+          "constraint" : {
           "width" : 1500,
           "height" : 500
-        },
-        "thumbnails" : [ {
+          },
+          "thumbnails" : [ {
           "name" : "Medium",
           "width" : 750,
           "height" : 250
-        }, {
+          }, {
           "name" : "Small",
           "width" : 150,
           "height" : 50
-        } ]
-      }
-    },
-    "gallery[2]" : {
-      "type" : "Image",
-      "config" : {
-        "constraint" : {
+          } ]
+          }
+          },
+          "gallery[2]" : {
+          "type" : "Image",
+          "config" : {
+          "constraint" : {
           "width" : 1500,
           "height" : 500
-        },
-        "thumbnails" : [ {
+          },
+          "thumbnails" : [ {
           "name" : "Medium",
           "width" : 750,
           "height" : 250
-        }, {
+          }, {
           "name" : "Small",
           "width" : 150,
           "height" : 50
-        } ]
-      }
-    }
-  },
-  "Reviews" : {
-    "testimonial_author[0]" : {
-      "fieldset" : "Gourmets reviews",
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading3",
-        "placeholder" : "First author"
-      }
-    },
-    "testimonial_quote[0]" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "p,strong,em",
-        "minHeight" : "50px",
-        "placeholder" : "First quote"
-      }
-    },
-    "testimonial_author[1]" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading3",
-        "placeholder" : "Second author"
-      }
-    },
-    "testimonial_quote[1]" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "p,strong,em",
-        "minHeight" : "50px",
-        "placeholder" : "Second quote"
-      }
-    }
-  }
-}
+          } ]
+          }
+          }
+          },
+          "Reviews" : {
+          "testimonial_author[0]" : {
+          "fieldset" : "Gourmets reviews",
+          "type" : "StructuredText",
+          "config" : {
+          "single" : "heading3",
+          "placeholder" : "First author"
+          }
+          },
+          "testimonial_quote[0]" : {
+          "type" : "StructuredText",
+          "config" : {
+          "single" : "p,strong,em",
+          "minHeight" : "50px",
+          "placeholder" : "First quote"
+          }
+          },
+          "testimonial_author[1]" : {
+          "type" : "StructuredText",
+          "config" : {
+          "single" : "heading3",
+          "placeholder" : "Second author"
+          }
+          },
+          "testimonial_quote[1]" : {
+          "type" : "StructuredText",
+          "config" : {
+          "single" : "p,strong,em",
+          "minHeight" : "50px",
+          "placeholder" : "Second quote"
+          }
+          }
+          }
+          }
         </textarea>
         <textarea id="output" class="col-md-6"></textarea>
       </div>
@@ -237,7 +237,7 @@
     <script>
       var $texts = $('#input, #output');
       var resizeTexts = function() {
-        $texts.height($(window).height() - 200);
+        $texts.height($(window).height() - 150);
       };
       $(window).resize(resizeTexts);
       resizeTexts();

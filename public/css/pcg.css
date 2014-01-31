@@ -5,10 +5,6 @@ body {
 h1 {
   text-align: center;
 }
-.actions {
-  margin: 1em 0;
-  text-align: center;
-}
 textarea {
   height: 700px;
   background: none;
@@ -22,9 +18,17 @@ textarea {
 .output {
 }
 
+.actions {
+  margin: 1em 0;
+  text-align: center;
+}
+.actions > * {
+  display: inline-block;
+  margin: 0 5px;
+}
 .language-chooser {
-  float: right;
   width: 100px;
-  top: -55px;
-  position: relative;
+}
+.mask-name {
+  width: 200px;
 }
