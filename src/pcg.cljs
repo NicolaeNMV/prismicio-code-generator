@@ -67,7 +67,7 @@
   (let [
         type-fun (get (map-type-to-fun) type)
       ]
-      (str "    " (if (nil? type-fun) "???" (type-fun name content)))
+      (str "    " (if (nil? type-fun) (type-undefined name content) (type-fun name content)))
   )
 )
 
@@ -75,17 +75,32 @@
   {"StructuredText" type-structured-text
    "Image" type-image
    "Color" type-color
+   "Number" type-number
+   "Text" type-text
+   "Link" type-link
   }
 )
 
 (defn type-structured-text [name content]
-  (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name ")"))
+  (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name "\")"))
 
 (defn type-image [name content]
-  (str "def " name ": Option[Fragment.Image] = document.getImage(s\"$maskName." name ")"))
+  (str "def " name ": Option[Fragment.Image] = document.getImage(s\"$maskName." name "\")"))
 
 (defn type-color [name content]
-  (str "def " name ": Option[RichColor] = document.getColor(s\"$maskName." name ")"))
+  (str "def " name ": Option[RichColor] = document.getColor(s\"$maskName." name "\")"))
+
+(defn type-number [name content]
+  (str "def " name ": Option[Fragment.Number] = document.getNumber(s\"$maskName." name "\")"))
+
+(defn type-text [name content]
+  (str "def " name ": Option[String] = document.getText(s\"$maskName." name "\")"))
+
+(defn type-link [name content]
+  (str "def " name ": Option[Fragment.Link] = document.getLink(s\"$maskName." name "\")"))
+
+(defn type-undefined [name content]
+  (str "def " name " = ???"))
 
 
 Color => Option[RichColor]

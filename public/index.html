@@ -9,8 +9,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/pcg.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/vendors/codemirror.css">
-    <script src="js/vendors/codemirror.js"></script>
     <script src="js/vendors/javascript.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,7 +33,202 @@
       <div class="row" id="textareas">
         <div class="col-md-6 col">
           <p class="legend">Paste your JSON mask here &#8595;</p>
-          <textarea id="input"></textarea>
+          <textarea id="input">
+{
+  "Main information" : {
+    "name" : {
+      "type" : "StructuredText",
+      "fieldset" : "Product name",
+      "config" : {
+        "single" : "heading1,em,strong",
+        "placeholder" : "The product's name"
+      }
+    },
+    "short_lede" : {
+      "type" : "StructuredText",
+      "fieldset" : "Short catcher",
+      "config" : {
+        "single" : "heading2,em,strong",
+        "placeholder" : "Shortest catcher to the product (about 15 words)"
+      }
+    },
+    "description" : {
+      "type" : "StructuredText",
+      "fieldset" : "Description",
+      "config" : {
+        "multi" : "paragraph,em,strong,hyperlink",
+        "placeholder" : "Exhaustive coverage of the product",
+        "minHeight" : "100px"
+      }
+    },
+    "image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Icon",
+          "width" : 250,
+          "height" : 250
+        } ]
+      }
+    }
+  },
+  "Additional informations" : {
+    "related[0]" : {
+      "fieldset" : "Related products",
+      "type" : "Link",
+      "config" : {
+        "placeholder" : "Related product #1",
+        "select" : "document",
+        "masks" : [ "product" ]
+      }
+    },
+    "related[1]" : {
+      "type" : "Link",
+      "config" : {
+        "placeholder" : "Related product #2",
+        "select" : "document",
+        "masks" : [ "product" ]
+      }
+    },
+    "related[2]" : {
+      "type" : "Link",
+      "config" : {
+        "placeholder" : "Related product #3",
+        "select" : "document",
+        "masks" : [ "product" ]
+      }
+    },
+    "allergens" : {
+      "type" : "Text",
+      "fieldset" : "Product properties",
+      "config" : {
+        "label" : "Allergens"
+      }
+    },
+    "price" : {
+      "type" : "Number",
+      "config" : {
+        "label" : "Price (in $)",
+        "min" : 0
+      }
+    },
+    "flavour[0]" : {
+      "type" : "Select",
+      "config" : {
+        "label" : "Flavour",
+        "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel" ]
+      }
+    },
+    "flavour[1]" : {
+      "type" : "Select",
+      "config" : {
+        "label" : "Secondary flavour",
+        "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel", "Spice" ]
+      }
+    },
+    "color" : {
+      "type" : "Color",
+      "config" : {
+        "label" : "Color tag"
+      }
+    }
+  },
+  "Gallery" : {
+    "gallery[0]" : {
+      "fieldset" : "Image gallery",
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Squared",
+          "width" : 500,
+          "height" : 500
+        }, {
+          "name" : "Small",
+          "width" : 150,
+          "height" : 50
+        } ]
+      }
+    },
+    "gallery[1]" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Medium",
+          "width" : 750,
+          "height" : 250
+        }, {
+          "name" : "Small",
+          "width" : 150,
+          "height" : 50
+        } ]
+      }
+    },
+    "gallery[2]" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Medium",
+          "width" : 750,
+          "height" : 250
+        }, {
+          "name" : "Small",
+          "width" : 150,
+          "height" : 50
+        } ]
+      }
+    }
+  },
+  "Reviews" : {
+    "testimonial_author[0]" : {
+      "fieldset" : "Gourmets reviews",
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading3",
+        "placeholder" : "First author"
+      }
+    },
+    "testimonial_quote[0]" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "p,strong,em",
+        "minHeight" : "50px",
+        "placeholder" : "First quote"
+      }
+    },
+    "testimonial_author[1]" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading3",
+        "placeholder" : "Second author"
+      }
+    },
+    "testimonial_quote[1]" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "p,strong,em",
+        "minHeight" : "50px",
+        "placeholder" : "Second quote"
+      }
+    }
+  }
+}
+          </textarea>
         </div>
         <div class="col-md-6 col">
           <textarea id="output"></textarea>
@@ -46,16 +239,6 @@
     <script>
       goog.require('pcg');
       pcg.start();
-
-      var editor = CodeMirror.fromTextArea(document.getElementById("input"), {
-        mode: "application/json"
-      });
-
-      var editor = CodeMirror.fromTextArea(document.getElementById("output"), {
-        mode: "scala"
-      });
-
-
     </script>
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     <script>
