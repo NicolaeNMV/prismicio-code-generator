@@ -11,7 +11,7 @@
 
 (defn generate [mask]
   (let [
-        fields (distinct-fields (desectionize mask))
+        fields (reformat mask)
         declaration (class-def fields)
         attrs (attributes fields)
         ]
@@ -30,30 +30,17 @@
   (dommy/listen! (sel1 :#generate) :click on-click)
   (on-click))
 
-(defn unfuck [fields]
-  (reduce (fn [acc [name obj]]
-            (conj acc (merge obj {"name" name})))
-          []
-          fields))
+(defn rename [name] (clojure.string/replace name #"\[(\d+)\]" "$1"))
 
-(defn desectionize [mask]
-  (flatten (reduce extract-section-content [] mask)))
+(defn reformat-field [fields]
+  (reduce (fn [acc [name obj]] (conj acc (merge obj {"name" (rename name)}))) [] fields))
 
-(defn extract-section-content [acc [key val]]
-  (conj acc (unfuck val)))
+(defn reformat [mask] (flatten (reduce extract-section-content [] mask)))
+
+(defn extract-section-content [acc [key val]] (conj acc (reformat-field val)))
 
 (defn class-def [mask]
   "class Product(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {")
-
-(defn distinct-fields [fields]
-  fields)
-; (loop [[field & rest] fields acc [] names #{}]
-;   (let [orig-name (first (first field))
-;         name (clojure.string/replace orig-name #"\[\d+\]$" "")]
-;     (log orig-name name)
-;     (if (contains? names name)
-;       (recur rest acc names)
-;       (recur rest (conj acc (update-in field ["name"] name)) (conj names name))))))
 
 (defn attributes [fields]
   (clojure.string/join "\n" (map attribute fields)))
