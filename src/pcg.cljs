@@ -9,14 +9,13 @@
 (defn log [& args] (.log js/console (apply pr-str args)))
 (defn log-obj [obj] (.log js/console obj))
 
-; Implement me!
 (defn generate [mask]
   (let [
-        fields (desectionize mask)
-        def (class-def fields)
+        fields (distinct-fields (desectionize mask))
+        declaration (class-def fields)
         attrs (attributes fields)
         ]
-  (str def "\n" attrs "\n" (boilerplate))))
+    (str declaration "\n" attrs "\n" (boilerplate))))
 
 (defn on-click []
   (let [
@@ -27,68 +26,83 @@
     (-> (sel1 :#output) (dommy/set-value! code))))
 
 (defn ^:export start []
+  (-> (sel1 :#output) (dommy/set-value! ""))
   (dommy/listen! (sel1 :#generate) :click on-click)
-  (generate)
   (on-click))
 
+(defn unfuck [fields]
+  (reduce (fn [acc [name obj]]
+            (conj acc (merge obj {"name" name})))
+          []
+          fields))
+
 (defn desectionize [mask]
-  (reduce extract-section-content [] mask))
+  (flatten (reduce extract-section-content [] mask)))
 
 (defn extract-section-content [acc [key val]]
-  (conj acc val))
+  (conj acc (unfuck val)))
 
 (defn class-def [mask]
   "class Product(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {")
+
+(defn distinct-fields [fields]
+  fields)
+; (loop [[field & rest] fields acc [] names #{}]
+;   (let [orig-name (first (first field))
+;         name (clojure.string/replace orig-name #"\[\d+\]$" "")]
+;     (log orig-name name)
+;     (if (contains? names name)
+;       (recur rest acc names)
+;       (recur rest (conj acc (update-in field ["name"] name)) (conj names name))))))
 
 (defn attributes [fields]
   (clojure.string/join "\n" (map attribute fields)))
 
 (defn attribute [stuff]
   (let [
-        name (first (first stuff))
-        content (get-in stuff name)
-        type (get-in content "type")
+        name (get stuff "name")
+        type (get stuff "type")
         ]
     (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name ")")))
 
 (defn boilerplate []
   "package models
 
-import io.prismic._
-import controllers._
+   import io.prismic._
+   import controllers._
 
-case class RichStructuredText(st: Fragment.StructuredText) {
-  def text: Option[String] = {
-    Some(st.blocks.collect { case b: Fragment.StructuredText.Block.Text => b.text }.mkString(\"\\n\")).filterNot(_.isEmpty)
-  }
-  def html(linkResolver: DocumentLinkResolver): Option[String] = {
-    Some(st.asHtml(linkResolver))
-  }
-}
+   case class RichStructuredText(st: Fragment.StructuredText) {
+   def text: Option[String] = {
+   Some(st.blocks.collect { case b: Fragment.StructuredText.Block.Text => b.text }.mkString(\"\\n\")).filterNot(_.isEmpty)
+   }
+   def html(linkResolver: DocumentLinkResolver): Option[String] = {
+   Some(st.asHtml(linkResolver))
+   }
+   }
 
-case class RichColor(color: Fragment.Color) {
-  def text: Option[String] = {
-    Some(color.hex)
-  }
-  def html: Option[String] = {
-    Some(color.asHtml)
-  }
-}
+   case class RichColor(color: Fragment.Color) {
+   def text: Option[String] = {
+   Some(color.hex)
+   }
+   def html: Option[String] = {
+   Some(color.asHtml)
+   }
+   }
 
-object PcgImplicits {
-  implicit def toRichStructuredText(st: Fragment.StructuredText): RichStructuredText = {
-    new RichStructuredText(st)
-  }
+   object PcgImplicits {
+   implicit def toRichStructuredText(st: Fragment.StructuredText): RichStructuredText = {
+   new RichStructuredText(st)
+   }
 
-  implicit def toRichStructuredTextOpt(st: Option[Fragment.StructuredText]): Option[RichStructuredText] = {
-    st.map(new RichStructuredText(_))
-  }
+   implicit def toRichStructuredTextOpt(st: Option[Fragment.StructuredText]): Option[RichStructuredText] = {
+   st.map(new RichStructuredText(_))
+   }
 
-  implicit def toRichColor(color: Fragment.Color): RichColor = {
-    new RichColor(color)
-  }
+   implicit def toRichColor(color: Fragment.Color): RichColor = {
+   new RichColor(color)
+   }
 
-  implicit def toRichColorOpt(color: Option[Fragment.Color]): Option[RichColor] = {
-    color.map(new RichColor(_))
-  }
-}")
+   implicit def toRichColorOpt(color: Option[Fragment.Color]): Option[RichColor] = {
+   color.map(new RichColor(_))
+   }
+   }")
