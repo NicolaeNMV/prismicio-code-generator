@@ -10,21 +10,17 @@
 (defn log-obj [obj] (.log js/console obj))
 
 (defn generate [mask-name mask]
-  (let [
-        fields (reformat mask)
+  (let [fields (reformat mask)
         declaration (class-def mask-name)
-        attrs (attributes fields)
-        ]
+        attrs (attributes fields)]
     (str (boilerplate) "\n\n" declaration "\n" (class-import) "\n\n" (class-headers mask-name) "\n" attrs "\n}" "\n\n" )))
 
 (defn on-click []
-  (let [
-        mask-name (let [name (dommy/value (sel1 :#mask-name))]
+  (let [mask-name (let [name (dommy/value (sel1 :#mask-name))]
                     (if (clojure.string/blank? name) "ClassName" name))
         json (dommy/value (sel1 :#input))
         mask (js->clj (JSON/parse json))
-        code (generate mask-name mask)
-        ]
+        code (generate mask-name mask)]
     (-> (sel1 :#output) (dommy/set-value! code))))
 
 (defn ^:export start []
@@ -43,8 +39,7 @@
 (defn class-def [mask-name]
   (str "class " (clojure.string/capitalize mask-name) "(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {"))
 
-(defn class-import []
-  "import PcgImplicits._")
+(defn class-import [] "import PcgImplicits._")
 
 (defn class-headers [mask-name]
   (str "  val maskName = "\" mask-name "\"\n"
@@ -55,21 +50,13 @@
 (defn attributes [fields] (clojure.string/join "\n" (map attribute fields)))
 
 (defn attribute [stuff]
-  (let [
-        name (get stuff "name")
-        type (get stuff "type")
-      ]
-      (type-call-fun type name stuff)
-  )
-)
+  (let [name (get stuff "name")
+        type (get stuff "type")]
+    (type-call-fun type name stuff)))
 
 (defn type-call-fun [type name content]
-  (let [
-        type-fun (get (map-type-to-fun) type)
-      ]
-      (str "    " (if (nil? type-fun) (type-undefined name content) (type-fun name content)))
-  )
-)
+  (let [type-fun (get (map-type-to-fun) type)]
+    (str "    " (if (nil? type-fun) (type-undefined name content) (type-fun name content)))))
 
 (defn map-type-to-fun []
   {"StructuredText" type-structured-text
@@ -77,9 +64,7 @@
    "Color" type-color
    "Number" type-number
    "Text" type-text
-   "Link" type-link
-  }
-)
+   "Link" type-link})
 
 (defn type-structured-text [name content]
   (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name "\")"))
@@ -101,9 +86,6 @@
 
 (defn type-undefined [name content]
   (str "def " name " = ???"))
-
-
-Color => Option[RichColor]
 
 (defn boilerplate []
  "package models
