@@ -5,6 +5,16 @@ body {
 h1 {
   text-align: center;
 }
+.actions {
+  margin: 1em 0;
+  text-align: center;
+}
+
+.CodeMirror {
+  float: left;
+  width: 50%;
+}
+
 textarea {
   height: 700px;
   width: 100%;

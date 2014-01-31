@@ -9,6 +9,10 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/pcg.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="css/vendors/codemirror.css">
+    <script src="js/vendors/codemirror.js"></script>
+    <script src="js/vendors/javascript.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -42,6 +46,16 @@
     <script>
       goog.require('pcg');
       pcg.start();
+
+      var editor = CodeMirror.fromTextArea(document.getElementById("input"), {
+        mode: "application/json"
+      });
+
+      var editor = CodeMirror.fromTextArea(document.getElementById("output"), {
+        mode: "scala"
+      });
+
+
     </script>
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     <script>
