@@ -10,7 +10,7 @@
               :builds {
                        :dev {
                              :source-paths ["src"]
-                             :compiler {:output-to "public/js/compiled-debug.js"
+                             :compiler {:output-to "public/js/compiled.js"
                                         :optimizations :whitespace
                                         :pretty-print true}}
                        :prod {

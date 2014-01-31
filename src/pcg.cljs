@@ -1,6 +1,5 @@
 (ns pcg
-  (:require [dommy.utils :as utils]
-            [dommy.core :as dommy])
+  (:require [dommy.core :as dommy])
   (:use-macros
     [dommy.macros :only [node sel sel1]]))
 
