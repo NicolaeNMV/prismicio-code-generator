@@ -67,7 +67,7 @@
   (let [
         type-fun (get (map-type-to-fun) "StructuredText")
       ]
-      (if (nil? type-fun) "nil" (str "  " (type-fun name content)))
+      (str "    " (if (nil? type-fun) "???" (type-fun name content)))
   )
 )
 
