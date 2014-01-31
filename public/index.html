@@ -28,12 +28,12 @@
         </select>
         <button id="generate" class="btn-primary btn-lg">Generate!</button>
       </div>
-      <div class="row">
+      <div class="row" id="textareas">
         <div class="col-md-6 col">
-          <p class="legend">Paste your JSON mask here &#8595;</p> 
+          <p class="legend">Paste your JSON mask here &#8595;</p>
           <textarea id="input"></textarea>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col">
           <textarea id="output"></textarea>
         </div>
       </div>
@@ -46,8 +46,9 @@
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     <script>
       var $texts = $('#input, #output');
+      var yPos = $('#textareas').offset().top + 25;
       var resizeTexts = function() {
-        $texts.height($(window).height() - 150);
+        $texts.height($(window).height() - yPos);
       };
       $(window).resize(resizeTexts);
       resizeTexts();

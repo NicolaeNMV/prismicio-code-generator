@@ -10,7 +10,8 @@ textarea {
   width: 100%;
   background: #002b36;
   border: none;
-  padding: 0;
+  padding: 10px;
+  padding-right: 0;
   margin: 0;
   font-family: monospace;
 }
@@ -35,6 +36,7 @@ textarea {
 }
 
 .col {
+  padding: 0;
   position: relative;
 }
 .col .legend {
