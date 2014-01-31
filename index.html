@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>prismic.io goodness generator</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/pcg.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>prismic.io code generator</h1>
+      <div class="row">
+        <textarea class="col-md-6">
+{
+  "Main information" : {
+    "name" : {
+      "type" : "StructuredText",
+      "fieldset" : "Product name",
+      "config" : {
+        "single" : "heading1,em,strong",
+        "placeholder" : "The product's name"
+      }
+    },
+    "short_lede" : {
+      "type" : "StructuredText",
+      "fieldset" : "Short catcher",
+      "config" : {
+        "single" : "heading2,em,strong",
+        "placeholder" : "Shortest catcher to the product (about 15 words)"
+      }
+    },
+    "description" : {
+      "type" : "StructuredText",
+      "fieldset" : "Description",
+      "config" : {
+        "multi" : "paragraph,em,strong,hyperlink",
+        "placeholder" : "Exhaustive coverage of the product",
+        "minHeight" : "100px"
+      }
+    },
+    "image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Icon",
+          "width" : 250,
+          "height" : 250
+        } ]
+      }
+    }
+  },
+  "Additional informations" : {
+    "related[0]" : {
+      "fieldset" : "Related products",
+      "type" : "Link",
+      "config" : {
+        "placeholder" : "Related product #1",
+        "select" : "document",
+        "masks" : [ "product" ]
+      }
+    },
+    "related[1]" : {
+      "type" : "Link",
+      "config" : {
+        "placeholder" : "Related product #2",
+        "select" : "document",
+        "masks" : [ "product" ]
+      }
+    },
+    "related[2]" : {
+      "type" : "Link",
+      "config" : {
+        "placeholder" : "Related product #3",
+        "select" : "document",
+        "masks" : [ "product" ]
+      }
+    },
+    "allergens" : {
+      "type" : "Text",
+      "fieldset" : "Product properties",
+      "config" : {
+        "label" : "Allergens"
+      }
+    },
+    "price" : {
+      "type" : "Number",
+      "config" : {
+        "label" : "Price (in $)",
+        "min" : 0
+      }
+    },
+    "flavour[0]" : {
+      "type" : "Select",
+      "config" : {
+        "label" : "Flavour",
+        "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel" ]
+      }
+    },
+    "flavour[1]" : {
+      "type" : "Select",
+      "config" : {
+        "label" : "Secondary flavour",
+        "options" : [ "Chocolate", "Lemon/lime", "Berries", "Pistachio", "Soft fruit", "Vanilla", "Caramel", "Spice" ]
+      }
+    },
+    "color" : {
+      "type" : "Color",
+      "config" : {
+        "label" : "Color tag"
+      }
+    }
+  },
+  "Gallery" : {
+    "gallery[0]" : {
+      "fieldset" : "Image gallery",
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Squared",
+          "width" : 500,
+          "height" : 500
+        }, {
+          "name" : "Small",
+          "width" : 150,
+          "height" : 50
+        } ]
+      }
+    },
+    "gallery[1]" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Medium",
+          "width" : 750,
+          "height" : 250
+        }, {
+          "name" : "Small",
+          "width" : 150,
+          "height" : 50
+        } ]
+      }
+    },
+    "gallery[2]" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1500,
+          "height" : 500
+        },
+        "thumbnails" : [ {
+          "name" : "Medium",
+          "width" : 750,
+          "height" : 250
+        }, {
+          "name" : "Small",
+          "width" : 150,
+          "height" : 50
+        } ]
+      }
+    }
+  },
+  "Reviews" : {
+    "testimonial_author[0]" : {
+      "fieldset" : "Gourmets reviews",
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading3",
+        "placeholder" : "First author"
+      }
+    },
+    "testimonial_quote[0]" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "p,strong,em",
+        "minHeight" : "50px",
+        "placeholder" : "First quote"
+      }
+    },
+    "testimonial_author[1]" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading3",
+        "placeholder" : "Second author"
+      }
+    },
+    "testimonial_quote[1]" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "p,strong,em",
+        "minHeight" : "50px",
+        "placeholder" : "Second quote"
+      }
+    }
+  }
+}
+        </textarea>
+        <textarea class="col-md-6">
+sealed trait Link extends Fragment
+
+case class WebLink(url: String, contentType: Option[String] = None) extends Link {
+  def asHtml(): String = s"""<a href="$url">$url</a>"""
+}
+
+object WebLink {
+
+  implicit val reader: Reads[WebLink] = {
+    (__ \ "url").read[String].map {
+      case url => WebLink(url)
+    }
+  }
+
+}
+
+case class MediaLink(url: String, kind: String, size: Long, filename: String) extends Link {
+  def asHtml: String = s"""<a href="$url">$filename</a>"""
+}
+
+object MediaLink {
+
+  implicit val reader: Reads[MediaLink] = {
+    (
+      (__ \ "file" \ "url").read[String] and
+      (__ \ "file" \ "kind").read[String] and
+      (__ \ "file" \ "size").read[String].map(_.toLong) and
+      (__ \ "file" \ "name").read[String]
+    )(MediaLink.apply _)
+  }
+}
+
+case class DocumentLink(id: String, typ: String, tags: Seq[String], slug: String, isBroken: Boolean) extends Link {
+  def asHtml(linkResolver: DocumentLinkResolver): String = s"""<a href="${linkResolver(this)}">$slug</a>"""
+}
+
+object DocumentLink {
+
+  implicit val reader: Reads[DocumentLink] = {
+    (
+      (__ \ "document").read(
+        (__ \ "id").read[String] and
+        (__ \ "type").read[String] and
+        (__ \ "tags").readNullable[Seq[String]].map(_.getOrElse(Nil)) and
+        (__ \ "slug").read[String] tupled
+      ) and
+      (__ \ "isBroken").readNullable[Boolean].map(_.getOrElse(false))
+    ).tupled.map(link => DocumentLink(link._1._1, link._1._2, link._1._3, link._1._4, link._2))
+  }
+
+}
+</textarea>
+      </div>
+    </div>
+    <script type="text/javascript" src="../out/goog/base.js"></script>
+    <script type="text/javascript" src="pcg.js"></script>
+    <script type="text/javascript">goog.require('hello');</script>
+    <script>
+      console.log(hello.greet("ClojureScript"));
+    </script>
+  </body>
+</html>
