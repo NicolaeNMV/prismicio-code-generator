@@ -1,5 +1,5 @@
 body {
-  background: #002b36;
+  background: #073642;
   color: #839496;
 }
 h1 {
@@ -7,7 +7,8 @@ h1 {
 }
 textarea {
   height: 700px;
-  background: none;
+  width: 100%;
+  background: #002b36;
   border: none;
   padding: 0;
   margin: 0;
@@ -31,4 +32,13 @@ textarea {
 }
 .mask-name {
   width: 200px;
+}
+
+.col {
+  position: relative;
+}
+.col .legend {
+  position: absolute;
+  top: -24px;
+  left: 15px;
 }
