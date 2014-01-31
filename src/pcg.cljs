@@ -1,6 +1,10 @@
 (ns pcg
   (:require [clojure.browser.event :as event]
-            [clojure.browser.dom   :as dom]))
+            [clojure.browser.dom   :as dom]
+            [dommy.utils :as utils]
+            [dommy.core :as dommy])
+  (:use-macros
+    [dommy.macros :only [node sel sel1]]))
 
 (defn log [& args]
   (.log js/console (apply pr-str args)))
@@ -8,28 +12,14 @@
 (defn log-obj [obj]
   (.log js/console obj))
 
+(def source      (dom/get-element "source"))
+(def destination (dom/get-element "destination"))
+
 (defn ^:export start []
-  (log "haha" "test"))
+  (dommy/listen! (sel1 :#generate) :click generate)
+  (generate))
 
-; (log-obj (dom/element "Text node"))
-; (log-obj (dom/element :li))
-; (log-obj (dom/element :li {:class "foo"}))
-; (log-obj (dom/element :li {:class "bar"} "text node"))
-; (log-obj (dom/element [:ul [:li :li :li]]))
-; (log-obj (dom/element :ul [:li :li :li]))
-; (log-obj (dom/element :li {} [:ul {} [:li :li :li]]))
-; (log-obj (dom/element [:li {:class "baz"} [:li {:class "quux"}]]))
-
-
-; (event/listen source
-;               :click
-;               (fn [e]
-;                 (let [i (swap! success-count inc)
-;                       e (dom/element :li
-;                                      {:id "testing"
-;                                       :class "test me out please"}
-;                                      "It worked!")]
-;                   (log-obj e)
-;                   (log i)
-;                   (dom/append destination
-;                               e))))
+(defn generate []
+  (let [json-string (:value (sel1 :#input))]
+    (log json-string)
+    (log (sel1 :#input))))

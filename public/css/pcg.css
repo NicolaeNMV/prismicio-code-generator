@@ -4,7 +4,10 @@ body {
 }
 h1 {
   text-align: center;
+}
+.actions {
   margin: 1em 0;
+  text-align: center;
 }
 textarea {
   height: 700px;

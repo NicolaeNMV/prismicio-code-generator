@@ -19,8 +19,11 @@
   <body>
     <div class="container-fluid">
       <h1>prismic.io code generator</h1>
+      <div class="actions">
+        <button id="generate" class="btn-primary btn-lg">Generate!</button>
+      </div>
       <div class="row">
-        <textarea class="col-md-6">
+        <textarea id="input" class="col-md-6">
 {
   "Main information" : {
     "name" : {
@@ -216,7 +219,7 @@
   }
 }
         </textarea>
-        <textarea class="col-md-6">
+        <textarea id="output" class="col-md-6">
 sealed trait Link extends Fragment
 
 case class WebLink(url: String, contentType: Option[String] = None) extends Link {
