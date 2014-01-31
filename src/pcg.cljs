@@ -26,7 +26,6 @@
     (-> (sel1 :#output) (dommy/set-value! code))))
 
 (defn ^:export start []
-  (-> (sel1 :#output) (dommy/set-value! ""))
   (dommy/listen! (sel1 :#generate) :click on-click)
   (on-click))
 
