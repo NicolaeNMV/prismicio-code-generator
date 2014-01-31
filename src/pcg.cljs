@@ -56,8 +56,30 @@
   (let [
         name (get stuff "name")
         type (get stuff "type")
-        ]
-    (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name ")")))
+      ]
+      (type-call-fun type name stuff)
+  )
+)
+
+(defn type-call-fun [type name content]
+  (let [
+        type-fun (get (map-type-to-fun) "StructuredText")
+      ]
+      (if (nil? type-fun) "nil" (str "    " (type-fun name content)))
+  )
+)
+
+(defn map-type-to-fun []
+  {"StructuredText" type-structured-text
+   "Image" type-image
+  }
+)
+
+(defn type-structured-text [name content]
+  (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name ")"))
+
+(defn type-image [name content]
+  (str "def " name ": Option[Fragment.Image] = document.getImage(s\"$maskName." name ")"))
 
 (defn boilerplate []
  "package models
