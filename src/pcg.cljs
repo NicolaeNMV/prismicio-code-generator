@@ -39,7 +39,7 @@
 (defn class-def [mask-name]
   (str "class " (clojure.string/capitalize mask-name) "(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {"))
 
-(defn class-import [] "import PcgImplicits._")
+(def class-import "import PcgImplicits._")
 
 (defn class-headers [mask-name]
   (str "  val maskName = "\" mask-name "\"\n"
