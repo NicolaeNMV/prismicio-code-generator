@@ -11,7 +11,12 @@
 
 ; Implement me!
 (defn generate [mask]
-  (boilerplate))
+  (let [
+        fields (desectionize mask)
+        def (class-def fields)
+        attrs (attributes fields)
+        ]
+  (str def "\n" attrs "\n" (boilerplate))))
 
 (defn on-click []
   (let [
@@ -23,7 +28,28 @@
 
 (defn ^:export start []
   (dommy/listen! (sel1 :#generate) :click on-click)
-  (generate))
+  (generate)
+  (on-click))
+
+(defn desectionize [mask]
+  (reduce extract-section-content [] mask))
+
+(defn extract-section-content [acc [key val]]
+  (conj acc val))
+
+(defn class-def [mask]
+  "class Product(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {")
+
+(defn attributes [fields]
+  (clojure.string/join "\n" (map attribute fields)))
+
+(defn attribute [stuff]
+  (let [
+        name (first (first stuff))
+        content (get-in stuff name)
+        type (get-in content "type")
+        ]
+    (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name ")")))
 
 (defn boilerplate []
   "package models

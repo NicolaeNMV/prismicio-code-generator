@@ -219,59 +219,7 @@
   }
 }
         </textarea>
-        <textarea id="output" class="col-md-6">
-sealed trait Link extends Fragment
-
-case class WebLink(url: String, contentType: Option[String] = None) extends Link {
-  def asHtml(): String = s"""<a href="$url">$url</a>"""
-}
-
-object WebLink {
-
-  implicit val reader: Reads[WebLink] = {
-    (__ \ "url").read[String].map {
-      case url => WebLink(url)
-    }
-  }
-
-}
-
-case class MediaLink(url: String, kind: String, size: Long, filename: String) extends Link {
-  def asHtml: String = s"""<a href="$url">$filename</a>"""
-}
-
-object MediaLink {
-
-  implicit val reader: Reads[MediaLink] = {
-    (
-      (__ \ "file" \ "url").read[String] and
-      (__ \ "file" \ "kind").read[String] and
-      (__ \ "file" \ "size").read[String].map(_.toLong) and
-      (__ \ "file" \ "name").read[String]
-    )(MediaLink.apply _)
-  }
-}
-
-case class DocumentLink(id: String, typ: String, tags: Seq[String], slug: String, isBroken: Boolean) extends Link {
-  def asHtml(linkResolver: DocumentLinkResolver): String = s"""<a href="${linkResolver(this)}">$slug</a>"""
-}
-
-object DocumentLink {
-
-  implicit val reader: Reads[DocumentLink] = {
-    (
-      (__ \ "document").read(
-        (__ \ "id").read[String] and
-        (__ \ "type").read[String] and
-        (__ \ "tags").readNullable[Seq[String]].map(_.getOrElse(Nil)) and
-        (__ \ "slug").read[String] tupled
-      ) and
-      (__ \ "isBroken").readNullable[Boolean].map(_.getOrElse(false))
-    ).tupled.map(link => DocumentLink(link._1._1, link._1._2, link._1._3, link._1._4, link._2))
-  }
-
-}
-</textarea>
+        <textarea id="output" class="col-md-6"></textarea>
       </div>
     </div>
     <script type="text/javascript" src="js/compiled.js"></script>
