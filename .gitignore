@@ -1,4 +1,4 @@
 target/
-public/js/compiled.js
+public/js/compiled*
 .lein-repl-history
 .nrepl-port
