@@ -1,7 +1,5 @@
 (ns pcg
-  (:require [clojure.browser.event :as event]
-            [clojure.browser.dom   :as dom]
-            [dommy.utils :as utils]
+  (:require [dommy.utils :as utils]
             [dommy.core :as dommy])
   (:use-macros
     [dommy.macros :only [node sel sel1]]))
