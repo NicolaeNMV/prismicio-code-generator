@@ -2,8 +2,7 @@
   :description "prismic.io code generator"
   :source-paths ["src-clj"]
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/clojurescript "0.0-2156"
-                  :exclusions [org.apache.ant/ant]]
+                 [org.clojure/clojurescript "0.0-2156" :exclusions [org.apache.ant/ant]]
                  [prismatic/dommy "0.1.2"]
                  ]
   :plugins [[lein-cljsbuild "1.0.2"]]

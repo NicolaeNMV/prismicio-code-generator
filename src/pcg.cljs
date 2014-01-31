@@ -27,10 +27,6 @@
         code (generate mask-name mask)]
     (-> (sel1 :#output) (dommy/set-value! code))))
 
-(defn ^:export start []
-  (dommy/listen! (sel1 :#generate) :click on-click)
-  (on-click))
-
 (defn renamer [name]
   (str "`" (clojure.string/replace name #"\[(\d+)\]" "$1") "`"))
 
@@ -134,3 +130,10 @@ object PcgImplicits {
     color.map(new RichColor(_))
   }
 }")
+
+(defn ^:export start []
+  (dommy/listen! (sel1 :#generate) :click on-click)
+  (on-click))
+
+; Run the application!
+(start)
