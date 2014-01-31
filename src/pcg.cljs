@@ -13,7 +13,7 @@
   (let [fields (reformat mask)
         declaration (class-def mask-name)
         attrs (attributes fields)]
-    (str (boilerplate) "\n\n" declaration "\n" (class-import) "\n\n" (class-headers mask-name) "\n" attrs "\n}" "\n\n" )))
+    (str (boilerplate) "\n\n" declaration "\n" class-import "\n\n" (class-headers mask-name) "\n" attrs "\n}" "\n\n" )))
 
 (defn on-click []
   (let [mask-name (let [name (dommy/value (sel1 :#mask-name))]
