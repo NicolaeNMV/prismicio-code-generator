@@ -19,7 +19,7 @@
         mask (js->clj (JSON/parse json))
         code (generate mask)
         ]
-    (log code)))
+    (-> (sel1 :#output) (dommy/set-value! code))))
 
 (defn ^:export start []
   (dommy/listen! (sel1 :#generate) :click on-click)
