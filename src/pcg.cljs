@@ -51,18 +51,7 @@
        "def slug: String = document.slug" "\n"
        "def tags: Seq[String] = document.tags"))
 
-(defn distinct-fields [fields]
-  fields)
-; (loop [[field & rest] fields acc [] names #{}]
-;   (let [orig-name (first (first field))
-;         name (clojure.string/replace orig-name #"\[\d+\]$" "")]
-;     (log orig-name name)
-;     (if (contains? names name)
-;       (recur rest acc names)
-;       (recur rest (conj acc (update-in field ["name"] name)) (conj names name))))))
-
-(defn attributes [fields]
-  (clojure.string/join "\n" (map attribute fields)))
+(defn attributes [fields] (clojure.string/join "\n" (map attribute fields)))
 
 (defn attribute [stuff]
   (let [
