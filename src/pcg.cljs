@@ -15,7 +15,7 @@
         declaration (class-def fields)
         attrs (attributes fields)
         ]
-    (str declaration "\n" attrs "\n" (boilerplate))))
+    (str (boilerplate) "\n\n" declaration "\n" (class-import) "\n\n" (class-headers "product") "\n" attrs "\n}" "\n\n" )))
 
 (defn on-click []
   (let [
@@ -42,6 +42,25 @@
 (defn class-def [mask]
   "class Product(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {")
 
+(defn class-import []
+  "import PcgImplicits._")
+
+(defn class-headers [mask-name]
+  (str "val maskName = "\" mask-name "\"\n"
+       "def id: String = document.id" "\n"
+       "def slug: String = document.slug" "\n"
+       "def tags: Seq[String] = document.tags"))
+
+(defn distinct-fields [fields]
+  fields)
+; (loop [[field & rest] fields acc [] names #{}]
+;   (let [orig-name (first (first field))
+;         name (clojure.string/replace orig-name #"\[\d+\]$" "")]
+;     (log orig-name name)
+;     (if (contains? names name)
+;       (recur rest acc names)
+;       (recur rest (conj acc (update-in field ["name"] name)) (conj names name))))))
+
 (defn attributes [fields]
   (clojure.string/join "\n" (map attribute fields)))
 
@@ -53,43 +72,43 @@
     (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name ")")))
 
 (defn boilerplate []
-  "package models
+ "package models
 
-   import io.prismic._
-   import controllers._
+import io.prismic._
+import controllers._
 
-   case class RichStructuredText(st: Fragment.StructuredText) {
-   def text: Option[String] = {
-   Some(st.blocks.collect { case b: Fragment.StructuredText.Block.Text => b.text }.mkString(\"\\n\")).filterNot(_.isEmpty)
-   }
-   def html(linkResolver: DocumentLinkResolver): Option[String] = {
-   Some(st.asHtml(linkResolver))
-   }
-   }
+case class RichStructuredText(st: Fragment.StructuredText) {
+def text: Option[String] = {
+Some(st.blocks.collect { case b: Fragment.StructuredText.Block.Text => b.text }.mkString(\"\\n\")).filterNot(_.isEmpty)
+}
+def html(linkResolver: DocumentLinkResolver): Option[String] = {
+Some(st.asHtml(linkResolver))
+}
+}
 
-   case class RichColor(color: Fragment.Color) {
-   def text: Option[String] = {
-   Some(color.hex)
-   }
-   def html: Option[String] = {
-   Some(color.asHtml)
-   }
-   }
+case class RichColor(color: Fragment.Color) {
+def text: Option[String] = {
+Some(color.hex)
+}
+def html: Option[String] = {
+Some(color.asHtml)
+}
+}
 
-   object PcgImplicits {
-   implicit def toRichStructuredText(st: Fragment.StructuredText): RichStructuredText = {
-   new RichStructuredText(st)
-   }
+object PcgImplicits {
+implicit def toRichStructuredText(st: Fragment.StructuredText): RichStructuredText = {
+new RichStructuredText(st)
+}
 
-   implicit def toRichStructuredTextOpt(st: Option[Fragment.StructuredText]): Option[RichStructuredText] = {
-   st.map(new RichStructuredText(_))
-   }
+implicit def toRichStructuredTextOpt(st: Option[Fragment.StructuredText]): Option[RichStructuredText] = {
+st.map(new RichStructuredText(_))
+}
 
-   implicit def toRichColor(color: Fragment.Color): RichColor = {
-   new RichColor(color)
-   }
+implicit def toRichColor(color: Fragment.Color): RichColor = {
+new RichColor(color)
+}
 
-   implicit def toRichColorOpt(color: Option[Fragment.Color]): Option[RichColor] = {
-   color.map(new RichColor(_))
-   }
-   }")
+implicit def toRichColorOpt(color: Option[Fragment.Color]): Option[RichColor] = {
+color.map(new RichColor(_))
+}
+}")
