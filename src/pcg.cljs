@@ -39,7 +39,7 @@
 (defn class-def [mask-name]
   (str "class " (clojure.string/capitalize mask-name) "(val document: io.prismic.Document)(implicit ctx: Prismic.Context) {"))
 
-(def class-import "import PcgImplicits._")
+(def class-import "  import PcgImplicits._")
 
 (defn class-headers [mask-name]
   (str "  val maskName = "\" mask-name "\"\n"
@@ -56,7 +56,7 @@
 
 (defn type-call-fun [type name content]
   (let [type-fun (get (map-type-to-fun) type)]
-    (str "    " (if (nil? type-fun) (type-undefined name content) (type-fun name content)))))
+    (str "  " (if (nil? type-fun) (type-undefined name content) (type-fun name content)))))
 
 (defn map-type-to-fun []
   {"StructuredText" type-structured-text
@@ -64,7 +64,10 @@
    "Color" type-color
    "Number" type-number
    "Text" type-text
-   "Link" type-link})
+   "Select" type-text
+   "Link" type-link
+  }
+)
 
 (defn type-structured-text [name content]
   (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name "\")"))
