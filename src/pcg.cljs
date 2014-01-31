@@ -13,7 +13,11 @@
   (let [fields (reformat mask)
         declaration (class-def mask-name)
         attrs (attributes fields)]
-    (str (boilerplate) "\n\n" declaration "\n" class-import "\n\n" (class-headers mask-name) "\n" attrs "\n}" "\n\n" )))
+    (str (boilerplate) "\n\n"
+         declaration "\n"
+         class-import "\n\n"
+         (class-headers mask-name) "\n"
+         attrs "\n}\n\n")))
 
 (defn on-click []
   (let [mask-name (let [name (dommy/value (sel1 :#mask-name))]
@@ -27,11 +31,11 @@
   (dommy/listen! (sel1 :#generate) :click on-click)
   (on-click))
 
-(defn rename [name] 
+(defn renamer [name]
   (str "`" (clojure.string/replace name #"\[(\d+)\]" "$1") "`"))
 
 (defn reformat-field [fields]
-  (reduce (fn [acc [name obj]] (conj acc (merge obj {"name" (rename name)}))) [] fields))
+  (reduce (fn [acc [name obj]] (conj acc (merge obj {"name" (renamer name)}))) [] fields))
 
 (defn reformat [mask] (flatten (reduce extract-section-content [] mask)))
 
@@ -66,9 +70,7 @@
    "Number" type-number
    "Text" type-text
    "Select" type-text
-   "Link" type-link
-  }
-)
+   "Link" type-link})
 
 (defn type-structured-text [name content]
   (str "def " name ": Option[RichStructuredText] = document.getStructuredText(s\"$maskName." name "\")"))

@@ -11,4 +11,4 @@
               :builds [{:source-paths ["src"]
                         :compiler {:output-to "public/js/compiled.js"
                                    :optimizations :whitespace
-                                   :pretty-print true}}]})
+                                   :pretty-print false}}]})
