@@ -132,5 +132,4 @@ object PcgImplicits {
 }")
 
 ; Run the application!
-(dommy/listen! (sel1 :#generate) :click on-click)
-(on-click!)
+(dommy/listen! (sel1 :#generate) :click on-click!)
