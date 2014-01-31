@@ -65,7 +65,7 @@
 
 (defn type-call-fun [type name content]
   (let [
-        type-fun (get (map-type-to-fun) "StructuredText")
+        type-fun (get (map-type-to-fun) type)
       ]
       (str "    " (if (nil? type-fun) "???" (type-fun name content)))
   )
