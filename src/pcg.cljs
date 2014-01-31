@@ -19,7 +19,7 @@
          (class-headers mask-name) "\n"
          attrs "\n}\n\n")))
 
-(defn on-click []
+(defn on-click! []
   (let [mask-name (let [name (dommy/value (sel1 :#mask-name))]
                     (if (clojure.string/blank? name) "ClassName" name))
         json (dommy/value (sel1 :#input))
@@ -27,11 +27,11 @@
         code (generate mask-name mask)]
     (-> (sel1 :#output) (dommy/set-value! code))))
 
-(defn renamer [name]
+(defn rename [name]
   (str "`" (clojure.string/replace name #"\[(\d+)\]" "$1") "`"))
 
 (defn reformat-field [fields]
-  (reduce (fn [acc [name obj]] (conj acc (merge obj {"name" (renamer name)}))) [] fields))
+  (reduce (fn [acc [name obj]] (conj acc (merge obj {"name" (rename name)}))) [] fields))
 
 (defn reformat [mask] (flatten (reduce extract-section-content [] mask)))
 
@@ -131,9 +131,6 @@ object PcgImplicits {
   }
 }")
 
-(defn ^:export start []
-  (dommy/listen! (sel1 :#generate) :click on-click)
-  (on-click))
-
 ; Run the application!
-(start)
+(dommy/listen! (sel1 :#generate) :click on-click)
+(on-click!)
