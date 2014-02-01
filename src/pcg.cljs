@@ -20,7 +20,7 @@
   (let [mask-name (let [name (dommy/value (sel1 :#mask-name))]
                     (if (clojure.string/blank? name) "ClassName" name))
         json (dommy/value (sel1 :#input))
-        mask (js->clj (JSON/parse json))
+        mask (js->clj (js/JSON.parse json))
         code (generate mask-name mask)]
     (-> (sel1 :#output) (dommy/set-value! code))))
 
